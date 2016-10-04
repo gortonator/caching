@@ -16,7 +16,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+//
+// Acceptsa series if get or put messages from a client
+// Request stream is terminated by an 'end' message
+//
 
 class CacheServerThread extends Thread {
   private Socket clientSocket;

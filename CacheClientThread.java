@@ -15,13 +15,18 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ThreadLocalRandom;
 
+//
+// Thread that sends a stream of get or out requests to a server, terminated by an 
+// end message. AThreads behave as a thread group synchronizd by the CyclicBarrier
+// 'synk'
+//
 
 public class CacheClientThread extends Thread{
    
-    String hostName;
-    int port;
-    CyclicBarrier synk;
-    String action;
+    private String hostName;
+    private int port;
+    private CyclicBarrier synk;
+    private String action;
     
     public CacheClientThread(String hostName, int port, CyclicBarrier barrier, String command) {
         this.hostName = hostName;
@@ -33,12 +38,15 @@ public class CacheClientThread extends Thread{
     public void run() {
         
         try {   
+            // get connection to server
             Socket s = new Socket(hostName, port);
             PrintWriter out =
                     new PrintWriter(s.getOutputStream(), true);
                 BufferedReader in =
                     new BufferedReader(
                         new InputStreamReader(s.getInputStream()));
+                
+            // send out a sequence of requests    
             for (int i = 0; i < 1000 ; i++ ) {
                 int value = ThreadLocalRandom.current().nextInt(1, 10000);
             
