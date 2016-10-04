@@ -12,6 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author Ian Gortan
  */
+
+// Simple class taht uses a FIFO algorithm to evict kets from the cache
+//
 public class EvictionList {
     private int front = 0;
     private int victim= 0;
@@ -29,7 +32,8 @@ public class EvictionList {
         
         
         if (numEntries == CACHE_CAPACITY) {
-            //cache is full so we need to evist entry taht has been there for longest
+            // cache is full so we need to evict an entry thatt 
+            // has been there for longest
             keyToEvict = list [victim];
             cache.remove(keyToEvict);
             System.out.println("Evicted key " + victim);
